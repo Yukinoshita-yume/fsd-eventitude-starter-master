@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/jei/fsd-eventitude-starter.git"
+    "url": "git@github.com:Yukinoshita-yume/fsd-eventitude-starter-master.git"
   },
   "keywords": [
     "eventitude",
@@ -20,22 +20,25 @@
     "stack",
     "web"
   ],
-  "author": "Xia Cui; Ash Williams",
-  "license": "MIT",
+  "author": "yuki",
+  "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/jei/fsd-eventitude-starter.git/issues"
+    "url": "https://github.com/Yukinoshita-yume/fsd-eventitude-starter-master/issues"
   },
-  "homepage": "https://gitlab.com/jei/fsd-eventitude-starter#readme",
+  "homepage": "https://github.com/Yukinoshita-yume/fsd-eventitude-starter-master#readme",
   "dependencies": {
-    "body-parser": "^1.20.2",
+    "express": "^5.1.0",
+    "body-parser": "^1.20.3",
     "chai": "^4.3.8",
     "chai-http": "^4.4.0",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "joi": "^17.10.2",
+    "joi": "^18.0.1",
+    "jsonwebtoken": "^9.0.2",
     "mocha": "^10.2.0",
-    "morgan": "^1.10.0",
-    "nodemon": "^3.0.1",
-    "sqlite3": "^5.1.6"
+    "morgan": "^1.10.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

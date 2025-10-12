@@ -69,7 +69,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 asked_by INTEGER,
                 event_id INTEGER,
                 votes INTEGER,
-                FOREIGN KEY (asked_by) REFERENCES users(user_id)
+                FOREIGN KEY (asked_by) REFERENCES users(user_id),
                 FOREIGN KEY (event_id) REFERENCES events(event_id)
             )`, (err) => {
                 if(err){
