@@ -255,7 +255,6 @@ exports.search = (req, res, next) => {
     
     // 对于需要用户ID的状态，检查是否已登录
     if (['MY_EVENTS', 'ATTENDING'].includes(filters.status) && !filters.userId) {
-        console.error(filters.userId);
         return res.fail('Authentication required for this status filter', 400);
     }
     
