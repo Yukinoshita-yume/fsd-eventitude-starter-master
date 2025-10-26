@@ -3,7 +3,7 @@ const userModel = require('../models/user');
 
 // session token验证中间件
 function authMiddleware(req, res, next) {
-    const sessionToken = req.headers['x-authorization'];
+    const sessionToken = req.headers['x-authorization'] || req.headers['authorization'];
 
     if (!sessionToken) {
         return res.status(401).json({ error_message: "Unauthorized" });
