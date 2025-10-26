@@ -92,8 +92,23 @@ exports.get = (req, res, next) => {
                     };
                     if(userId == event.creator_id){
                         eventDetails.attendees = attendees;
+                        return res.success(eventDetails);
                     }
-                    return res.success(eventDetails);
+                    else {
+                        console.log("check is attending");
+                        eventModel.isUserAttending(eventId, userId, (err, isAttending) => {
+                            if (err) {
+                                console.error(err);
+                                return res.fail('Database error', 500);
+                            }
+                            if (isAttending) {
+                                eventDetails.isAttending = true;
+                            }
+                            else {
+                                eventDetails.isAttending = false;
+                            }
+                            return res.success(eventDetails);
+                    });}
                 });
             });
         });

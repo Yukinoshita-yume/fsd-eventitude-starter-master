@@ -23,7 +23,7 @@ function authMiddleware(req, res, next) {
     });
 }
 function optionalAuthMiddleware(req, res, next) {
-    const sessionToken = req.headers['x-authorization'];
+    const sessionToken = req.headers['x-authorization'] || req.headers['authorization'];
     if (!sessionToken) {
         return next(); // 没有token，继续处理请求
     }
