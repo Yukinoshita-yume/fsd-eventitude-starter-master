@@ -15,4 +15,7 @@ router.post('/question/:question_id/vote', authMiddleware, questionController.up
 // DELETE /question/:question_id/vote - 踩问题 (需要认证)
 router.delete('/question/:question_id/vote', authMiddleware, questionController.downvote);
 
+// GET /question/user - 获取当前用户的所有问题 (需要认证)
+router.get('/user', authMiddleware, questionController.getByUserId);
+
 module.exports = router;

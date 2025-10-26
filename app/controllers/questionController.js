@@ -188,3 +188,17 @@ exports.downvote = (req, res, next) => {
         });
     });
 };
+
+// Get all questions by user ID
+exports.getByUserId = (req, res, next) => {
+    const userId = req.user.user_id;
+    
+    questionModel.getByUserId(userId, (err, questions) => {
+        if (err) {
+            console.error(err);
+            return res.fail('Database error', 500);
+        }
+        
+        return res.success(questions);
+    });
+};

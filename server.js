@@ -40,7 +40,8 @@ app.use('/', authRouter);
 app.use('/events', eventRouter);
 app.use('/event', eventRouter);
 app.use('/', questionRouter);
-app.get('/search', optionalAuthMiddleware,eventController.search);
+app.get('/search', optionalAuthMiddleware, eventController.search);
+app.get('/search/count', optionalAuthMiddleware, eventController.count);
 
 app.use(function (req, res, next) {
   res.status(404).json({ error_message: "Not Found" })

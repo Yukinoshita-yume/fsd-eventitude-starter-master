@@ -133,6 +133,24 @@ const hasUserVoted = function(questionId, userId, done) {
     );
 };
 
+const getByUserId = function(userId, done) {
+    const sql = `SELECT q.question_id, q.question, q.votes, q.event_id,
+                        e.name as event_name
+                 FROM questions q
+                 JOIN events e ON q.event_id = e.event_id
+                 WHERE q.asked_by = ?
+                 ORDER BY q.question_id DESC`;
+    const values = [userId];
+    db.all(
+        sql,
+        values,
+        function(err, rows) {
+            if (err) return done(err);
+            return done(null, rows);
+        }
+    );
+};
+
 module.exports = {
     insert,
     findById,
@@ -140,5 +158,6 @@ module.exports = {
     getByEventId,
     upvote,
     downvote,
-    hasUserVoted
+    hasUserVoted,
+    getByUserId
 };

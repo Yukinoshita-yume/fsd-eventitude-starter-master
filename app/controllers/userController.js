@@ -21,3 +21,27 @@ exports.create = (req, res, next) => {
       return res.success({user_id: id}, 201);
   });
 };
+
+exports.getById = (req, res, next) => {
+  const userId = parseInt(req.params.user_id);
+  if (isNaN(userId)) {
+      return res.fail('Invalid user ID', 400);
+  }
+  
+  userModel.findById(userId, (err, user) => {
+      if (err) {
+          console.error(err);
+          return res.fail('Database error', 500);
+      }
+      if (!user) {
+          return res.fail('User not found', 404);
+      }
+      
+      return res.success({
+          user_id: user.user_id,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email
+      });
+  });
+};

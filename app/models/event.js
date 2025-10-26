@@ -202,6 +202,50 @@ const searchEvents = function(filters, done) {
     );
 };
 
+const countEvents = function(filters, done) {
+    let sql = `SELECT COUNT(*) as count
+               FROM events e 
+               JOIN users u ON e.creator_id = u.user_id 
+               WHERE 1=1`;
+    const values = [];
+    
+    if (filters.q) {
+        sql += ' AND e.name LIKE ?';
+        values.push(`%${filters.q}%`);
+    }
+    
+    if (filters.status) {
+        const now = Date.now();
+        switch (filters.status) {
+            case 'MY_EVENTS':
+                sql += ' AND e.creator_id = ?';
+                values.push(filters.userId);
+                break;
+            case 'ATTENDING':
+                sql += ' AND e.event_id IN (SELECT event_id FROM attendees WHERE user_id = ?) AND e.creator_id != ?';
+                values.push(filters.userId, filters.userId);
+                break;
+            case 'OPEN':
+                sql += ' AND e.close_registration > ? AND e.close_registration != -1';
+                values.push(now);
+                break;
+            case 'ARCHIVE':
+                sql += ' AND e.close_registration < ?';
+                values.push(now);
+                break;
+        }
+    }
+    
+    db.get(
+        sql,
+        values,
+        function(err, row) {
+            if (err) return done(err);
+            return done(null, row ? row.count : 0);
+        }
+    );
+};
+
 module.exports = {
     insert,
     findById,
@@ -211,5 +255,6 @@ module.exports = {
     getAttendees,
     getAttendeeCount,
     isUserAttending,
-    searchEvents
+    searchEvents,
+    countEvents
 };
