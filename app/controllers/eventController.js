@@ -299,3 +299,31 @@ exports.search = (req, res, next) => {
         return res.success(formattedEvents);
     });
 };
+
+// Count events
+exports.count = (req, res, next) => {
+    const filters = {
+        q: req.query.q,
+        status: req.query.status,
+        userId: req.user ? req.user.user_id : null
+    };
+    
+    // 验证status参数
+    if (filters.status && !['MY_EVENTS', 'ATTENDING', 'OPEN', 'ARCHIVE'].includes(filters.status)) {
+        return res.fail('Invalid status parameter', 400);
+    }
+    
+    // 对于需要用户ID的状态，检查是否已登录
+    if (['MY_EVENTS', 'ATTENDING'].includes(filters.status) && !filters.userId) {
+        return res.fail('Authentication required for this status filter', 400);
+    }
+    
+    eventModel.countEvents(filters, (err, count) => {
+        if (err) {
+            console.error(err);
+            return res.fail('Database error', 500);
+        }
+        
+        return res.success({ event_count: count });
+    });
+};
