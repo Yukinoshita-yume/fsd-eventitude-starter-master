@@ -67,7 +67,6 @@ describe("Searching with no criteria, and no authentication, to test pagination.
         return chai.request(SERVER_URL)
             .get("/search")
             .then((res) => {
-                console.log(res.body)
                 expect(res).to.have.status(200)
                 expect(res.body.length).to.equal(20)
             })
